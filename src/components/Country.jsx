@@ -9,26 +9,26 @@ const Country = ({ country }) => {
 
   // Fetch weather data and save it into state variable
   useEffect(() => {
-    console.log('capital before: ', country.capital);
+    // remove diatrics from capitals
     const capital = removeDiatrics(country.capital);
-    console.log('Capital after: ', capital);
     axios
       .get(
         `http://api.weatherstack.com/current?access_key=${process.env.REACT_APP_WEATHERSTACK_API_KEY}&query=${capital}`
       )
       .then((response) => {
         /* When there is an issue fetching data from 
-        'api.weatherstack.com, site does not return an error, but
-        object with variable "success: false", so axios.catch() does
-        not catch it, and it had to be implemented in this way: */
-        if (response.data.success !== false) {
+        'api.weatherstack.com, site doesn't return an error, but
+        object with variable "success: false", so error has to be thrown
+        in order to allow axios.catch() to catch it. */
+        if (response.data.success === false) {
+          throw new Error(response.data.error.info);
+        } else {
           setWeather(response.data);
         }
       })
       .catch((error) => {
         console.log(
-          `Unable to fetch weather data for ${country.name}: `,
-          error.message
+          `Unable to fetch weather data for ${country.name}, reason: "${error.message}"`
         );
       });
   }, [country.capital, country.name]);
