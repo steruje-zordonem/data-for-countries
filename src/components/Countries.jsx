@@ -2,11 +2,11 @@ import React from 'react';
 import Country from './Country';
 import './Countries.css';
 
-const Countries = ({ countries, setFilter }) => {
+const Countries = ({ countries, filter, setFilter }) => {
   // SHOW COUNTRIES BASED ON HOW MANY MATCH THE FILTER
 
-  // None  or All of them - we are at the beginning state
-  if (countries.length === 0 || countries.length > 240) {
+  // Beginning state of the application
+  if (countries.length === 0 || !filter) {
     return null;
   }
 

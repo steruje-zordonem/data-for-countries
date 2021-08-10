@@ -36,7 +36,11 @@ const App = () => {
           <p>Find countries:</p>
           <input onChange={(e) => handleInputChange(e)} />
         </div>
-        <Countries countries={countriesToShow} setFilter={setFilter} />
+        <Countries
+          countries={countriesToShow}
+          filter={filter}
+          setFilter={setFilter}
+        />
       </div>
     </div>
   );
