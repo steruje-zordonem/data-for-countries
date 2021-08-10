@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './Country.css';
+import removeDiatrics from '../utils/removeDiatrics';
 require('dotenv').config();
 
 const Country = ({ country }) => {
@@ -8,9 +9,12 @@ const Country = ({ country }) => {
 
   // Fetch weather data and save it into state variable
   useEffect(() => {
+    console.log('capital before: ', country.capital);
+    const capital = removeDiatrics(country.capital);
+    console.log('Capital after: ', capital);
     axios
       .get(
-        `http://api.weatherstack.com/current?access_key=${process.env.REACT_APP_WEATHERSTACK_API_KEY}&query=${country.capital}`
+        `http://api.weatherstack.com/current?access_key=${process.env.REACT_APP_WEATHERSTACK_API_KEY}&query=${capital}`
       )
       .then((response) => {
         /* When there is an issue fetching data from 
